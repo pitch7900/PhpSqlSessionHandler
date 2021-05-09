@@ -1,4 +1,18 @@
 {
+    "name": "pitch7900/phpsqlsessionhandler",
+    "type": "library",
+    "description": "Sql session handler for Php",
+    "keywords": ["SQL","PHP","Sessions","session","hendler"],
+    "homepage": "https://github.com/pitch7900/PhpSqlSessionHandler",
+    "license": "Apache",
+    "authors": [
+        {
+            "name": "Pierre Christensen",
+            "email": "pierre.christensen@gmail.com",
+            "homepage": "https://github.com/pitch7900",
+            "role": "Developer"
+        }
+    ],
     "require": {
         "illuminate/database": "8"
     }
