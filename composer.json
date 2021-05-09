@@ -19,8 +19,8 @@
     ],
     "require": {
         "php": "^7.3|^8.0",
-        "illuminate/database": "8",
-        "symfony/var-dumper": "5.2"
+        "illuminate/database": "^8",
+        "symfony/var-dumper": "^5.2"
     },
     "autoload": {
         "psr-4": {
