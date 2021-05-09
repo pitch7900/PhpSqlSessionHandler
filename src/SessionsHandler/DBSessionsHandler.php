@@ -32,12 +32,7 @@ class DBSessionsHandler  extends SessionHandler
         $this->debug = $debug;
         $this->logfile = $logfile;
         $this->authvaluename = $authvaluename;
-        try {
-            Sessions::exists();
-        } catch (Exception $e) {
-            echo $e;
-            die();
-        }
+        
     }
 
 
