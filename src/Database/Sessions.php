@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Database;
+namespace Pitch7900\Database;
 
 /**
  * Class Track for Illuminate (DB) queries
+ * Need to create a database with illuminate
  */
 class Sessions extends AbstractModel {
     public $timestamps = true;
