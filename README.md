@@ -80,3 +80,8 @@ public function __construct(
 
 @return void
 ```
+
+## Implementation sample
+
+An implementation sample can be found in this Slim Template : <https://github.com/pitch7900/slim4Template>
+See bootstrap/app.php file.
