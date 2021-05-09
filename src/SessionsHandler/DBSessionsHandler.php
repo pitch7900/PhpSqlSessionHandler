@@ -32,6 +32,12 @@ class DBSessionsHandler  extends SessionHandler
         $this->debug = $debug;
         $this->logfile = $logfile;
         $this->authvaluename = $authvaluename;
+        try {
+            Sessions::exists();
+        } catch (Exception $e) {
+            echo $e;
+            die();
+        }
     }
 
 
@@ -74,7 +80,7 @@ class DBSessionsHandler  extends SessionHandler
     public function getSesssionArray(string $data)
     {
         $this->log('getSesssionArray()' . $data);
-        if (is_null($data)){
+        if (is_null($data)) {
             return array();
         }
         $currentSession = array_map(function ($a) {
