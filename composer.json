@@ -8,7 +8,7 @@
         "issues": "https://github.com/pitch7900/PhpSqlSessionHandler/issues",
         "source": "https://github.com/pitch7900/PhpSqlSessionHandler"
     },
-    "license": "MIT",
+    "license": "Apache-2.0",
     "authors": [
         {
             "name": "Pierre Christensen",
