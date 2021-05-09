@@ -46,7 +46,7 @@ use Pitch7900\SessionsHandler\DBSessionsHandler;
 
 session_cache_limiter('public');
 ini_set("session.cookie_httponly", 1);
-session_name('EBOOKS_SID');
+session_name('APPS_SESSID');
 
 //Use a custom SessionHandler Based on database.
 $handler = new DBSessionsHandler(3600,'user',$rootPath."/logs/sessions.log",false);
