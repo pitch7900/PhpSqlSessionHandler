@@ -11,7 +11,7 @@ It also allow to have more than one http request at once after session start.
 ```json
 "php": "^7.3|^8.0",
 "illuminate/database": "^6|^7|^8",
-"symfony/var-dumper": "^5.2"
+"symfony/var-dumper": "^5"
 ```
 
 ### Database
