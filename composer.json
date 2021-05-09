@@ -27,7 +27,7 @@
             "Pitch7900\\": "src"
         },
         "files": [
-            "Pitch7900/Helpers/helpers.php"
+            "src/Helpers/helpers.php"
         ]
     },
     "extra": {
