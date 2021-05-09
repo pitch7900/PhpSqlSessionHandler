@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Database;
+namespace Pitch7900\Database;
 
 use Illuminate\Database\Eloquent\Model;
 
