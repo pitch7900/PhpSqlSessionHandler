@@ -2,7 +2,6 @@
 
 namespace Pitch7900\SessionsHandler;
 
-use Exception;
 use SessionHandler;
 use Pitch7900\Database\Sessions;
 
@@ -16,23 +15,24 @@ class DBSessionsHandler  extends SessionHandler
     private $logfile;
     private $debug;
     private $session_duration;
-    private $authvaluename;
+    private $authenticatedUserValue;
     private $noAuthMaxLifetTime = 30;
+
     /**
      * __construct
      *
-     * @param  int $session_duration
-     * @param  string $logfile for debug
-     * @param  bool $debug 
+     * @param  mixed $session_duration
+     * @param  mixed $authenticatedUserValue
+     * @param  mixed $logfile
+     * @param  mixed $debug
      * @return void
      */
-    public function __construct(int $session_duration = 3600, $authvaluename = null, string $logfile = null, bool $debug = false)
+    public function __construct(int $session_duration = 3600, $authenticatedUserValue = null, string $logfile = null, bool $debug = false)
     {
         $this->session_duration = $session_duration;
         $this->debug = $debug;
         $this->logfile = $logfile;
-        $this->authvaluename = $authvaluename;
-        
+        $this->authenticatedUserValue = $authenticatedUserValue;
     }
 
 
@@ -91,11 +91,11 @@ class DBSessionsHandler  extends SessionHandler
      */
     public function isAuthentified(string $data): bool
     {
-        if (is_null($this->authvaluename)) {
+        if (is_null($this->authenticatedUserValue)) {
             return false;
         }
         $currentSession = $this->getSesssionArray($data);
-        if (isset($currentSession[$this->authvaluename])) {
+        if (isset($currentSession[$this->authenticatedUserValue])) {
             return true;
         } else {
             return false;
