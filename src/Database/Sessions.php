@@ -3,7 +3,6 @@
 namespace Pitch7900\Database;
 
 use Exception;
-use ErrorException;
 
 /**
  * Class Track for Illuminate (DB) queries
