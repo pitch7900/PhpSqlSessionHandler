@@ -2,13 +2,21 @@
     "name": "pitch7900/phpsqlsessionhandler",
     "type": "library",
     "description": "Sql session handler for Php",
-    "keywords": ["SQL","PHP","Sessions","session","hendler"],
+    "keywords": [
+        "SQL",
+        "PHP",
+        "Sessions",
+        "session",
+        "hendler"
+    ],
     "homepage": "https://github.com/pitch7900/PhpSqlSessionHandler",
     "support": {
         "issues": "https://github.com/pitch7900/PhpSqlSessionHandler/issues",
         "source": "https://github.com/pitch7900/PhpSqlSessionHandler"
     },
-    "license": "Apache-2.0",
+    "license": [
+        "Apache-2.0"
+    ],
     "authors": [
         {
             "name": "Pierre Christensen",
