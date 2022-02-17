@@ -41,9 +41,9 @@ class DBSessionsHandler  extends SessionHandler
      * @link  https://www.php.net/manual/fr/sessionhandler.open.php
      * @param  mixed $savePath
      * @param  mixed $sessionName
-     * @return void
+     * @return bool
      */
-    public function open($savePath, $sessionName)
+    public function open($savePath, $sessionName): bool
     {
         $this->log('open(' . $savePath . ', ' . $sessionName . ')');
         $authlimit = time() - ($this->session_duration);
@@ -54,7 +54,7 @@ class DBSessionsHandler  extends SessionHandler
         // remove all sessions that are not authentified and which lifetime is > noAuthMaxLifetTime
         // This will avoid to retain sessions that are not authentified (Loab balancer or others robots)
         foreach ($sessions as $session) {
-            if (!$this->isAuthentified($session->data) && $session->data < $noauthlimit) {
+            if (!$this->isAuthentified($session->data) && $session->timestamp < $noauthlimit) {
                 $session->forceDelete();
             }
         }
@@ -64,15 +64,21 @@ class DBSessionsHandler  extends SessionHandler
     /**
      * close
      * @link https://www.php.net/manual/fr/sessionhandler.close.php
-     * @return void
+     * @return bool
      */
-    public function close()
+    public function close(): bool
     {
         $this->log('close');
         return true;
     }
-
-    public function getSesssionArray(string $data)
+    
+    /**
+     * getSesssionArray
+     *
+     * @param  mixed $data
+     * @return void
+     */
+    public function getSesssionArray($data)
     {
         $this->log('getSesssionArray()' . $data);
         if (is_null($data)) {
@@ -105,7 +111,7 @@ class DBSessionsHandler  extends SessionHandler
     /**
      * read https://www.php.net/manual/fr/sessionhandler.read.php
      * @link 
-     * @param  mixed $id
+     * @param  string $id
      * @return string
      */
     public function read($id): string
@@ -117,6 +123,11 @@ class DBSessionsHandler  extends SessionHandler
             //populates the $_SESSION superglobal
             //Necessary if using multiple servers in backend
             session_decode($session->data);
+            $this->log('read(' . $id . ') current time '.time());
+            $this->log('read(' . $id . ') duration '.$this->session_duration);
+            $this->log('read(' . $id . ') session timestamp '.$session->timestamp);
+            //Set or update time to live for the session
+            $_SESSION['ttl_in_s'] = $this->session_duration - time() + $session->timestamp;
             return (string)$session->data;
         } else {
             return "";
@@ -126,11 +137,11 @@ class DBSessionsHandler  extends SessionHandler
     /**
      * write
      * @link https://www.php.net/manual/fr/sessionhandler.write.php
-     * @param  mixed $id
-     * @param  mixed $data
-     * @return void
+     * @param  string  $id
+     * @param  string  $data
+     * @return bool
      */
-    public function write($id, $data)
+    public function write( $id,  $data): bool
     {
         $this->log('write(' . $id . ', ' . $data . ')');
         $session = Sessions::find($id);
@@ -154,9 +165,9 @@ class DBSessionsHandler  extends SessionHandler
     /**
      * create_sid
      * @link https://www.php.net/manual/fr/sessionhandler.create-sid.php
-     * @return void
+     * @return string
      */
-    public function create_sid()
+    public function create_sid(): string
     {
         $sid = parent::create_sid();
         return $sid;
@@ -165,40 +176,41 @@ class DBSessionsHandler  extends SessionHandler
 
     /**
      * destroy 
-     * @link https://www.php.net/manual/fr/sessionhandler.destroy.php
+     * @link    
      *
      * @param  mixed $id
-     * @return void
+     * @return bool
      */
-    public function destroy($id)
+    public function destroy($id): bool
     {
         $this->log('destroy(' . $id . ')');
         $session = Sessions::find($id);
         $session->forceDelete();
         return true;
     }
-
-
-
+    
+   
     /**
-     * gc 
+     * gc
      * @link https://www.php.net/manual/fr/sessionhandler.gc.php
-     *
-     * @param  mixed $maxlifetime
-     * @return void
+     * Returns the number of deleted sessions on success, or false in case of failure
+     * @param  int $maxlifetime
+     * @return int
      */
-    public function gc($maxlifetime)
+    public function gc($maxlifetime):int 
     {
         $this->log('gc(' . $maxlifetime . ')');
         Sessions::where('timestamp', '<', time() - intval($maxlifetime))->forceDelete();
         $sessions = Sessions::all();
         $noauthlimit = time() - 30;
+        $deletedSessions = 0;
         foreach ($sessions as $session) {
             if (!$this->isAuthentified($session->data) && $session->data < $noauthlimit) {
                 $session->forceDelete();
+                $deletedSessions++;
             }
         }
-        return true;
+        return $deletedSessions;
     }
 
     /**
