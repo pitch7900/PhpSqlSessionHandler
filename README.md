@@ -9,9 +9,9 @@ It also allow to have more than one http request at once after session start.
 ### Composer requirements
 
 ```json
-"php": "^7.3|^8.0",
-"illuminate/database": "^6|^7|^8",
-"symfony/var-dumper": "^5"
+"php": "^7.3|^7.4|^8",
+"illuminate/database": "^6|^7|^8|^9",
+"symfony/var-dumper": "^5|^6"
 ```
 
 ### Database
